@@ -9,10 +9,12 @@
 	<bean id="noOppasswordEncoder" class="org.springframework.security.crypto.password.NoOpPasswordEncoder"></bean>
 
 	<security:http>
-		<security:http-basic/>
+		<security:form-login login-page="/login.htm" login-processing-url="/dologin.htm" username-parameter="j_username"
+		password-parameter="j_password" default-target-url="/home.htm"/>
+		<security:logout logout-url="/dologout.htm" logout-success-url="/logout.htm"/>
 		<security:csrf disabled="true"/>
 		<security:intercept-url pattern="/home.htm" access="isAuthenticated()"/>
-		<security:intercept-url pattern="/dashboard.htm" access="permitAll"/>
+		<security:intercept-url pattern="/dashboard.htm" access="isAuthenticated()"/>
 	</security:http>
 	<security:authentication-manager>
 		<security:authentication-provider>
